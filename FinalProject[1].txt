@@ -1,0 +1,39 @@
+**Introduction:**
+
+Our project is a CRM-based system designed for managing leads and includes features such as call facilities, a virtual call center, and business phone services. It was developed by our team and is currently deployed in the USA.
+
+**Tech Stacks:**
+
+- We have around 8 frontends, 16 backends, and 14 databases.
+- Frontends consist of 1 main frontend and 7 micro frontends, developed using ReactJS. They are stored in an S3 bucket and launched using serverless hosting with CloudFront for transfer acceleration. Users access our hosted page by visiting the DNS of our project, which is managed by Route53 and directed to the CloudFront of our frontend.
+- The 16 backends are developed in Java and deployed using the EKS service in AWS. We use the ingress method to expose the pods of the backends to the Load Balancer, which is connected to Route53 with a DNS for our backend. This DNS acts as an endpoint to connect our backend to the frontend.
+- For handling databases, we use the RDS service of AWS. The databases are deployed with the pods of the backends.
+
+**Branching/Deployment Strategies:**
+
+- Our project has 4 main branches: DEV, TEST, UAT, and PROD, along with 2 additional branches for debugging named FEATURE and HOTFIX.
+- Developers work on the DEV branch, pushing their source code and requesting merge requests after coding.
+- Testers test the source code on the TEST branch and request merge requests upon meeting project requirements.
+- Clients check their requirements on the UAT branch, and upon meeting them, the branch is merged with the PROD branch for deployment.
+- The PROD branch hosts the live code after successful deployment.
+- Additional feature branches are created from DEV for any additions or corrections and merged back after corrections.
+- For addressing critical issues or bugs in the production environment, a HOTFIX branch is created from PROD and merged back after debugging.
+
+**DevOps Tools:**
+
+- We use Docker for containerization and Kubernetes (k8s) for orchestration.
+- Grafana and Prometheus are used for monitoring.
+- Our cloud platform of choice is AWS.
+- For pipelines, we use Jenkins with InfraPipelines and application pipelines:
+  - InfraPipeline includes stages like pull, Test (which includes TF plan), and Deploy (having TF apply).
+  - ApplicationPipeline includes stages like PULL for pulling source code, Build for building Maven artifacts, TEST with SonarQube testing, and DEPLOY with Docker images deployed with EKS clusters.
+- For version control, we use Git and GitLab, and for automation, we use Terraform (TF).
+
+**Roles:**
+
+- Creating branches and merging them.
+- Writing Dockerfiles and manifest files for pod deployments, Load Balancers, and ingress.
+- Using TF scripting for creating RDS instances, EKS clusters, and S3 configurations.
+
+---
+
